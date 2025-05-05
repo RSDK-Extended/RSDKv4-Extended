@@ -59,11 +59,16 @@ fs::path resolvePath(fs::path given)
 void InitMods()
 {
     modList.clear();
-    forceUseScripts    = forceUseScripts_Config;
-    skipStartMenu      = skipStartMenu_Config;
-    disableFocusPause  = disableFocusPause_Config;
-    redirectSave       = false;
-    Engine.forceSonic1 = false;
+    forceUseScripts     = forceUseScripts_Config;
+    skipStartMenu       = skipStartMenu_Config;
+    disableFocusPause   = disableFocusPause_Config;
+    redirectSave        = false;
+    Engine.forceSonic1  = false;
+    Engine.forceSonicCD = false;
+    Engine.forceSonic2  = false;
+    Engine.forceSonic3  = false;
+    Engine.forceSonicK  = false;
+    Engine.forceSonic3K = false;
     sprintf(savePath, "");
 
     char modBuf[0x100];
@@ -119,11 +124,16 @@ void InitMods()
         }
     }
 
-    forceUseScripts    = forceUseScripts_Config;
-    skipStartMenu      = skipStartMenu_Config;
-    disableFocusPause  = disableFocusPause_Config;
-    redirectSave       = false;
-    Engine.forceSonic1 = false;
+    forceUseScripts     = forceUseScripts_Config;
+    skipStartMenu       = skipStartMenu_Config;
+    disableFocusPause   = disableFocusPause_Config;
+    redirectSave        = false;
+    Engine.forceSonic1  = false;
+    Engine.forceSonicCD = false;
+    Engine.forceSonic2  = false;
+    Engine.forceSonic3  = false;
+    Engine.forceSonicK  = false;
+    Engine.forceSonic3K = false;
     sprintf(savePath, "");
     for (int m = 0; m < modList.size(); ++m) {
         if (!modList[m].active)
@@ -140,6 +150,16 @@ void InitMods()
         }
         if (modList[m].forceSonic1)
             Engine.forceSonic1 = true;
+        if (modList[m].forceSonicCD)
+            Engine.forceSonicCD = true;
+        if (modList[m].forceSonic2)
+            Engine.forceSonic2 = true;
+        if (modList[m].forceSonic3)
+            Engine.forceSonic3 = true;
+        if (modList[m].forceSonicK)
+            Engine.forceSonicK = true;
+        if (modList[m].forceSonic3K)
+            Engine.forceSonic3K = true;
     }
 
     ReadSaveRAMData();
@@ -224,6 +244,31 @@ bool LoadMod(ModInfo *info, std::string modsPath, std::string folder, bool activ
         modSettings.GetBool("", "ForceSonic1", &info->forceSonic1);
         if (info->forceSonic1 && info->active)
             Engine.forceSonic1 = true;
+
+        info->forceSonicCD = false;
+        modSettings.GetBool("", "ForceSonicCD", &info->forceSonicCD);
+        if (info->forceSonicCD && info->active)
+            Engine.forceSonicCD = true;
+
+        info->forceSonic2 = false;
+        modSettings.GetBool("", "ForceSonic2", &info->forceSonic2);
+        if (info->forceSonic2 && info->active)
+            Engine.forceSonic2 = true;
+
+        info->forceSonic3 = false;
+        modSettings.GetBool("", "ForceSonic3", &info->forceSonic3);
+        if (info->forceSonic3 && info->active)
+            Engine.forceSonic3 = true;
+
+        info->forceSonicK = false;
+        modSettings.GetBool("", "ForceSonicK", &info->forceSonicK);
+        if (info->forceSonicK && info->active)
+            Engine.forceSonicK = true;
+
+        info->forceSonic3K = false;
+        modSettings.GetBool("", "ForceSonic3K", &info->forceSonic3K);
+        if (info->forceSonic3K && info->active)
+            Engine.forceSonic3K = true;
 
         return true;
     }
@@ -402,11 +447,16 @@ void RefreshEngine()
         entity->eventCreate(entity);
     }
 
-    forceUseScripts    = forceUseScripts_Config;
-    skipStartMenu      = skipStartMenu_Config;
-    disableFocusPause  = disableFocusPause_Config;
-    redirectSave       = false;
-    Engine.forceSonic1 = false;
+    forceUseScripts     = forceUseScripts_Config;
+    skipStartMenu       = skipStartMenu_Config;
+    disableFocusPause   = disableFocusPause_Config;
+    redirectSave        = false;
+    Engine.forceSonic1  = false;
+    Engine.forceSonicCD = false;
+    Engine.forceSonic2  = false;
+    Engine.forceSonic3  = false;
+    Engine.forceSonicK  = false;
+    Engine.forceSonic3K = false;
     sprintf(savePath, "");
     for (int m = 0; m < modList.size(); ++m) {
         if (!modList[m].active)
@@ -423,42 +473,77 @@ void RefreshEngine()
         }
         if (modList[m].forceSonic1)
             Engine.forceSonic1 = true;
+        if (modList[m].forceSonicCD)
+            Engine.forceSonicCD = true;
+        if (modList[m].forceSonic2)
+            Engine.forceSonic2 = true;
+        if (modList[m].forceSonic3)
+            Engine.forceSonic3 = true;
+        if (modList[m].forceSonicK)
+            Engine.forceSonicK = true;
+        if (modList[m].forceSonic3K)
+            Engine.forceSonic3K = true;
     }
 
-    Engine.gameType = GAME_SONIC2;
+    Engine.gameType = GAME_UNKNOWN;
     if (strstr(Engine.gameWindowText, "Sonic 1") || Engine.forceSonic1) {
         Engine.gameType = GAME_SONIC1;
     }
 
-    achievementCount = 0;
-    if (Engine.gameType == GAME_SONIC1) {
-        AddAchievement("Ramp Ring Acrobatics",
-                       "Without touching the ground,\rcollect all the rings in a\rtrapezoid formation in Green\rHill Zone Act 1");
-        AddAchievement("Blast Processing", "Clear Green Hill Zone Act 1\rin under 30 seconds");
-        AddAchievement("Secret of Marble Zone", "Travel though a secret\rroom in Marbale Zone Act 3");
-        AddAchievement("Block Buster", "Break 16 blocks in a row\rwithout stopping");
-        AddAchievement("Ring King", "Collect 200 Rings");
-        AddAchievement("Secret of Labyrinth Zone", "Activate and ride the\rhidden platform in\rLabyrinth Zone Act 1");
-        AddAchievement("Flawless Pursuit", "Clear the boss in Labyrinth\rZone without getting hurt");
-        AddAchievement("Bombs Away", "Defeat the boss in Starlight Zone\rusing only the see-saw bombs");
-        AddAchievement("Hidden Transporter", "Collect 50 Rings and take the hidden transporter path\rin Scrap Brain Act 2");
-        AddAchievement("Chaos Connoisseur", "Collect all the chaos\remeralds");
-        AddAchievement("One For the Road", "As a parting gift, land a\rfinal hit on Dr. Eggman's\rescaping Egg Mobile");
-        AddAchievement("Beat The Clock", "Clear the Time Attack\rmode in less than 45\rminutes");
+    if (strstr(Engine.gameWindowText, "Sonic CD") || Engine.forceSonicCD) {
+        Engine.gameType = GAME_SONICCD;
     }
-    else if (Engine.gameType == GAME_SONIC2) {
-        AddAchievement("Quick Run", "Complete Emerald Hill\rZone Act 1 in under 35\rseconds");
-        AddAchievement("100% Chemical Free", "Complete Chemical Plant\rwithout going underwater");
-        AddAchievement("Early Bird Special", "Collect all the Chaos\rEmeralds before Chemical\rPlant");
-        AddAchievement("Superstar", "Complete any Act as\rSuper Sonic");
-        AddAchievement("Hit it Big", "Get a jackpot on the Casino Night slot machines");
-        AddAchievement("Bop Non-stop", "Defeat any boss in 8\rconsecutive hits without\rtouching he ground");
-        AddAchievement("Perfectionist", "Get a Perfect Bonus by\rcollecting every Ring in an\rAct");
-        AddAchievement("A Secret Revealed", "Find and complete\rHidden Palace Zone");
-        AddAchievement("Head 2 Head", "Win a 2P Versus race\ragainst a friend");
-        AddAchievement("Metropolis Master", "Complete Any Metropolis\rZone Act without getting\rhurt");
-        AddAchievement("Scrambled Egg", "Defeat Dr. Eggman's Boss\rAttack mode in under 7\rminutes");
-        AddAchievement("Beat the Clock", "Complete the Time Attack\rmode in less than 45\rminutes");
+
+	if (strstr(Engine.gameWindowText, "Sonic 2") || Engine.forceSonic2) {
+        Engine.gameType = GAME_SONIC2;
+    }
+
+	if (strstr(Engine.gameWindowText, "Sonic 3") || Engine.forceSonic3) {
+        Engine.gameType = GAME_SONIC3;
+    }
+
+	if (strstr(Engine.gameWindowText, "Sonic & Knuckles") || Engine.forceSonicK) {
+        Engine.gameType = GAME_SONICK;
+    }
+
+	if (strstr(Engine.gameWindowText, "Sonic 3 & Knuckles") || Engine.forceSonic3K) {
+        Engine.gameType = GAME_SONIC3K;
+    }
+
+    achievementCount = 0;
+    switch(Engine.gameType) {
+        case GAME_SONIC1: {
+			AddAchievement("Ramp Ring Acrobatics",
+                           "Without touching the ground,\rcollect all the rings in a\rtrapezoid formation in Green\rHill Zone Act 1");
+            AddAchievement("Blast Processing", "Clear Green Hill Zone Act 1\rin under 30 seconds");
+            AddAchievement("Secret of Marble Zone", "Travel though a secret\rroom in Marbale Zone Act 3");
+            AddAchievement("Block Buster", "Break 16 blocks in a row\rwithout stopping");
+            AddAchievement("Ring King", "Collect 200 Rings");
+            AddAchievement("Secret of Labyrinth Zone", "Activate and ride the\rhidden platform in\rLabyrinth Zone Act 1");
+            AddAchievement("Flawless Pursuit", "Clear the boss in Labyrinth\rZone without getting hurt");
+            AddAchievement("Bombs Away", "Defeat the boss in Starlight Zone\rusing only the see-saw bombs");
+            AddAchievement("Hidden Transporter", "Collect 50 Rings and take the hidden transporter path\rin Scrap Brain Act 2");
+            AddAchievement("Chaos Connoisseur", "Collect all the chaos\remeralds");
+            AddAchievement("One For the Road", "As a parting gift, land a\rfinal hit on Dr. Eggman's\rescaping Egg Mobile");
+            AddAchievement("Beat The Clock", "Clear the Time Attack\rmode in less than 45\rminutes");
+            break;
+        }
+		
+        case GAME_SONIC2: {
+            AddAchievement("Quick Run", "Complete Emerald Hill\rZone Act 1 in under 35\rseconds");
+            AddAchievement("100% Chemical Free", "Complete Chemical Plant\rwithout going underwater");
+            AddAchievement("Early Bird Special", "Collect all the Chaos\rEmeralds before Chemical\rPlant");
+            AddAchievement("Superstar", "Complete any Act as\rSuper Sonic");
+            AddAchievement("Hit it Big", "Get a jackpot on the Casino Night slot machines");
+            AddAchievement("Bop Non-stop", "Defeat any boss in 8\rconsecutive hits without\rtouching he ground");
+            AddAchievement("Perfectionist", "Get a Perfect Bonus by\rcollecting every Ring in an\rAct");
+            AddAchievement("A Secret Revealed", "Find and complete\rHidden Palace Zone");
+            AddAchievement("Head 2 Head", "Win a 2P Versus race\ragainst a friend");
+            AddAchievement("Metropolis Master", "Complete Any Metropolis\rZone Act without getting\rhurt");
+            AddAchievement("Scrambled Egg", "Defeat Dr. Eggman's Boss\rAttack mode in under 7\rminutes");
+            AddAchievement("Beat the Clock", "Complete the Time Attack\rmode in less than 45\rminutes");
+            break;
+        }
     }
 
     SaveMods();

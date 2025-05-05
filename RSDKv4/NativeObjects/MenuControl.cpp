@@ -20,7 +20,7 @@ void MenuControl_Create(void *objPtr)
     int vsID = GetSceneID(STAGELIST_PRESENTATION, "2P VS");
     if (vsID != -1) {
 #else
-    if (Engine.gameType == GAME_SONIC2) {
+    if (Engine.gameType == GAME_SONIC2 || Engine.gameType == GAME_SONIC3 || Engine.gameType == GAME_SONIC3K) {
 #endif
         self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
         self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;

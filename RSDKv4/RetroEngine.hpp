@@ -285,7 +285,12 @@ enum RetroStates {
 enum RetroGameType {
     GAME_UNKNOWN = 0,
     GAME_SONIC1  = 1,
-    GAME_SONIC2  = 2,
+    GAME_SONICCD = 2,
+    GAME_SONIC2  = 3,
+    GAME_SONIC3  = 4,
+    GAME_SONICK  = 5,
+    GAME_SONIC3K = 6,
+    //Add your game here!
 };
 
 // General Defines
@@ -468,6 +473,11 @@ public:
 #if RETRO_USE_MOD_LOADER
     bool modMenuCalled = false;
     bool forceSonic1   = false;
+    bool forceSonicCD  = false;
+    bool forceSonic2   = false;
+    bool forceSonic3   = false;
+    bool forceSonicK   = false;
+    bool forceSonic3K  = false;
 #endif
 #endif
 

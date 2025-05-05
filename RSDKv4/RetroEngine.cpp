@@ -418,13 +418,52 @@ void RetroEngine::Init()
     }
 
 #if !RETRO_USE_ORIGINAL_CODE
-    gameType = GAME_SONIC2;
+    gameType = GAME_UNKNOWN;
 #if RETRO_USE_MOD_LOADER
     if (strstr(gameWindowText, "Sonic 1") || forceSonic1) {
 #else
     if (strstr(gameWindowText, "Sonic 1")) {
 #endif
         gameType = GAME_SONIC1;
+    }
+#if RETRO_USE_MOD_LOADER
+    if (strstr(gameWindowText, "Sonic CD") || forceSonicCD) {
+#else
+    if (strstr(gameWindowText, "Sonic CD")) {
+#endif
+        gameType = GAME_SONICCD;
+    }
+#endif
+#if RETRO_USE_MOD_LOADER
+    if (strstr(gameWindowText, "Sonic 2") || forceSonic2) {
+#else
+    if (strstr(gameWindowText, "Sonic 2")) {
+#endif
+        gameType = GAME_SONIC2;
+    }
+#endif
+#if RETRO_USE_MOD_LOADER
+    if (strstr(gameWindowText, "Sonic 3") || forceSonic3) {
+#else
+    if (strstr(gameWindowText, "Sonic 3")) {
+#endif
+        gameType = GAME_SONIC3;
+    }
+#endif
+#if RETRO_USE_MOD_LOADER
+    if (strstr(gameWindowText, "Sonic & Knuckles") || forceSonicK) {
+#else
+    if (strstr(gameWindowText, "Sonic & Knuckles")) {
+#endif
+        gameType = GAME_SONICK;
+    }
+#endif
+#if RETRO_USE_MOD_LOADER
+    if (strstr(gameWindowText, "Sonic 3 & Knuckles") || forceSonic3K) {
+#else
+    if (strstr(gameWindowText, "Sonic 3 & Knuckles")) {
+#endif
+        gameType = GAME_SONIC3K;
     }
 #endif
 

@@ -25,6 +25,11 @@ struct ModInfo {
     bool redirectSave;
     std::string savePath;
     bool forceSonic1;
+    bool forceSonicCD;
+    bool forceSonic2;
+    bool forceSonic3;
+    bool forceSonicK;
+    bool forceSonic3K;
     bool active;
 };
 
