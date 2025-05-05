@@ -1,6 +1,15 @@
 ![](header.png?raw=true)
 
-A complete decompilation of Retro Engine v4 and the menus from Sonic 1 and 2 (2013).
+An expanded version for the decompilation of Retro Engine v4 and the menus from Sonic 1 and 2 (2013).
+
+This project is a fork meant to be an expanded version of RSDKv4 that allows for the ease of development of ports and mods, it also adds in both new and returning select features into RSDKv4 such as support for playing videos (TBA), the Classic Fade function from Team Forever's edit of RSDKv4 and more on the way!
+
+# **LIST OF CHANGES OVER THE ORIGINAL RETRO ENGINE VERSION 4**
+ * Adds in Team Forever's Classic Fade functions and changes.
+ * New temp values - temp8, temp9, temp10
+
+# To-Dos:
+ * Video player and its functions (unknown)
 
 # **SUPPORT THE OFFICIAL RELEASE OF SONIC 1 & 2**
 + Without assets from the official releases, this decompilation will not run.
