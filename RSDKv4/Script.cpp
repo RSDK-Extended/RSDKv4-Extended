@@ -69,6 +69,9 @@ const char variableNames[][0x20] = {
     "temp5",
     "temp6",
     "temp7",
+    "temp8",
+    "temp9",
+    "temp10",
     "checkResult",
     "arrayPos0",
     "arrayPos1",
@@ -429,6 +432,7 @@ const FunctionInfo functions[] = {
     FunctionInfo("LoadPalette", 5),
     FunctionInfo("RotatePalette", 4),
     FunctionInfo("SetScreenFade", 4),
+    FunctionInfo("SetClassicFade", 4),
     FunctionInfo("SetActivePalette", 3),
 #if RETRO_REV00
     FunctionInfo("SetPaletteFade", 7),
@@ -449,6 +453,7 @@ const FunctionInfo functions[] = {
     FunctionInfo("EditMenuEntry", 4),
     FunctionInfo("LoadStage", 0),
     FunctionInfo("DrawRect", 8),
+    FunctionInfo("ClassicTint", 8),
     FunctionInfo("ResetObjectEntity", 5),
     FunctionInfo("BoxCollisionTest", 11),
     FunctionInfo("CreateTempObject", 4),
@@ -632,6 +637,9 @@ enum ScrVar {
     VAR_TEMP5,
     VAR_TEMP6,
     VAR_TEMP7,
+    VAR_TEMP8,
+    VAR_TEMP9,
+    VAR_TEMP10,
     VAR_CHECKRESULT,
     VAR_ARRAYPOS0,
     VAR_ARRAYPOS1,
@@ -960,6 +968,7 @@ enum ScrFunc {
     FUNC_LOADPALETTE,
     FUNC_ROTATEPALETTE,
     FUNC_SETSCREENFADE,
+    FUNC_SETCLASSICFADE,
     FUNC_SETACTIVEPALETTE,
     FUNC_SETPALETTEFADE,
     FUNC_SETPALETTEENTRY,
@@ -974,6 +983,7 @@ enum ScrFunc {
     FUNC_EDITMENUENTRY,
     FUNC_LOADSTAGE,
     FUNC_DRAWRECT,
+    FUNC_CLASSICTINT,
     FUNC_RESETOBJECTENTITY,
     FUNC_BOXCOLLISIONTEST,
     FUNC_CREATETEMPOBJECT,
@@ -3407,6 +3417,9 @@ void ProcessScript(int scriptCodeStart, int jumpTableStart, byte scriptEvent)
                     case VAR_TEMP5: scriptEng.operands[i] = scriptEng.temp[5]; break;
                     case VAR_TEMP6: scriptEng.operands[i] = scriptEng.temp[6]; break;
                     case VAR_TEMP7: scriptEng.operands[i] = scriptEng.temp[7]; break;
+                    case VAR_TEMP8: scriptEng.operands[i] = scriptEng.temp[8]; break;
+                    case VAR_TEMP9: scriptEng.operands[i] = scriptEng.temp[9]; break;
+                    case VAR_TEMP10: scriptEng.operands[i] = scriptEng.temp[10]; break;
                     case VAR_CHECKRESULT: scriptEng.operands[i] = scriptEng.checkResult; break;
                     case VAR_ARRAYPOS0: scriptEng.operands[i] = scriptEng.arrayPosition[0]; break;
                     case VAR_ARRAYPOS1: scriptEng.operands[i] = scriptEng.arrayPosition[1]; break;
@@ -4694,7 +4707,11 @@ void ProcessScript(int scriptCodeStart, int jumpTableStart, byte scriptEvent)
                 break;
             case FUNC_SETSCREENFADE:
                 opcodeSize = 0;
-                SetFade(scriptEng.operands[0], scriptEng.operands[1], scriptEng.operands[2], scriptEng.operands[3]);
+                SetFade(1, scriptEng.operands[0], scriptEng.operands[1], scriptEng.operands[2], scriptEng.operands[3]);
+                break;
+            case FUNC_SETCLASSICFADE:
+                opcodeSize = 0;
+                SetFade(2, scriptEng.operands[0], scriptEng.operands[1], scriptEng.operands[2], scriptEng.operands[3]);
                 break;
             case FUNC_SETACTIVEPALETTE:
                 opcodeSize = 0;
@@ -4938,6 +4955,11 @@ void ProcessScript(int scriptCodeStart, int jumpTableStart, byte scriptEvent)
                 opcodeSize = 0;
                 DrawRectangle(scriptEng.operands[0], scriptEng.operands[1], scriptEng.operands[2], scriptEng.operands[3], scriptEng.operands[4],
                               scriptEng.operands[5], scriptEng.operands[6], scriptEng.operands[7]);
+                break;
+            case FUNC_CLASSICTINT:
+                opcodeSize = 0;
+                DrawClassicFade(scriptEng.operands[0], scriptEng.operands[1], scriptEng.operands[2], scriptEng.operands[3], scriptEng.operands[4],
+                                scriptEng.operands[5], scriptEng.operands[6], scriptEng.operands[7]);
                 break;
             case FUNC_RESETOBJECTENTITY: {
                 opcodeSize     = 0;
@@ -5692,6 +5714,9 @@ void ProcessScript(int scriptCodeStart, int jumpTableStart, byte scriptEvent)
                     case VAR_TEMP5: scriptEng.temp[5] = scriptEng.operands[i]; break;
                     case VAR_TEMP6: scriptEng.temp[6] = scriptEng.operands[i]; break;
                     case VAR_TEMP7: scriptEng.temp[7] = scriptEng.operands[i]; break;
+                    case VAR_TEMP8: scriptEng.temp[8] = scriptEng.operands[i]; break;
+                    case VAR_TEMP9: scriptEng.temp[9] = scriptEng.operands[i]; break;
+                    case VAR_TEMP10: scriptEng.temp[10] = scriptEng.operands[i]; break;
                     case VAR_CHECKRESULT: scriptEng.checkResult = scriptEng.operands[i]; break;
                     case VAR_ARRAYPOS0: scriptEng.arrayPosition[0] = scriptEng.operands[i]; break;
                     case VAR_ARRAYPOS1: scriptEng.arrayPosition[1] = scriptEng.operands[i]; break;

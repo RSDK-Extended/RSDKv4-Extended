@@ -110,6 +110,7 @@ void Draw3DFloorLayer(int layerID);
 void Draw3DSkyLayer(int layerID);
 
 // Shape Drawing
+void DrawClassicFade(int XPos, int YPos, int width, int height, int R, int G, int B, int A);
 void DrawRectangle(int XPos, int YPos, int width, int height, int R, int G, int B, int A);
 void SetFadeHQ(int R, int G, int B, int A);
 void DrawTintRectangle(int XPos, int YPos, int width, int height);
