@@ -37,6 +37,7 @@ extern byte fadeA;
 extern byte fadeR;
 extern byte fadeG;
 extern byte fadeB;
+extern int fadeX;
 
 extern int paletteMode;
 
