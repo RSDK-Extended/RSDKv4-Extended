@@ -218,7 +218,7 @@ void ProcessStage(void)
         case STAGEMODE_NORMAL:
             drawStageGFXHQ = false;
             if (fadeMode > 0)
-                fadeMode--;
+                fadeMode = 0;
 
             lastXSize = -1;
             lastYSize = -1;
@@ -234,8 +234,7 @@ void ProcessStage(void)
                     frameCounter = 0;
                     if (++stageSeconds > 59) {
                         stageSeconds = 0;
-                        if (++stageMinutes > 59)
-                            stageMinutes = 0;
+                        ++stageMinutes;
                     }
                 }
                 stageMilliseconds = 100 * frameCounter / 60;
@@ -270,7 +269,7 @@ void ProcessStage(void)
         case STAGEMODE_PAUSED:
             drawStageGFXHQ = false;
             if (fadeMode > 0)
-                fadeMode--;
+                fadeMode = 0;
 
             lastXSize = -1;
             lastYSize = -1;
@@ -315,7 +314,7 @@ void ProcessStage(void)
         case STAGEMODE_FROZEN:
             drawStageGFXHQ = false;
             if (fadeMode > 0)
-                fadeMode--;
+                fadeMode = 0;
 
             lastXSize = -1;
             lastYSize = -1;
@@ -348,7 +347,7 @@ void ProcessStage(void)
         case STAGEMODE_2P:
             drawStageGFXHQ = false;
             if (fadeMode > 0)
-                fadeMode--;
+                fadeMode = 0;
 
             lastXSize = -1;
             lastYSize = -1;
@@ -364,8 +363,7 @@ void ProcessStage(void)
                     frameCounter = 0;
                     if (++stageSeconds > 59) {
                         stageSeconds = 0;
-                        if (++stageMinutes > 59)
-                            stageMinutes = 0;
+                        ++stageMinutes;
                     }
                 }
                 stageMilliseconds = 100 * frameCounter / 60;
@@ -401,7 +399,7 @@ void ProcessStage(void)
         case STAGEMODE_NORMAL_STEP:
             drawStageGFXHQ = false;
             if (fadeMode > 0)
-                fadeMode--;
+                fadeMode = 0;
 
             lastXSize = -1;
             lastYSize = -1;
@@ -416,8 +414,7 @@ void ProcessStage(void)
                         frameCounter = 0;
                         if (++stageSeconds > 59) {
                             stageSeconds = 0;
-                            if (++stageMinutes > 59)
-                                stageMinutes = 0;
+                            ++stageMinutes;
                         }
                     }
                     stageMilliseconds = 100 * frameCounter / 60;
@@ -456,7 +453,7 @@ void ProcessStage(void)
         case STAGEMODE_PAUSED_STEP:
             drawStageGFXHQ = false;
             if (fadeMode > 0)
-                fadeMode--;
+                fadeMode = 0;
 
             lastXSize = -1;
             lastYSize = -1;
@@ -502,7 +499,7 @@ void ProcessStage(void)
         case STAGEMODE_FROZEN_STEP:
             drawStageGFXHQ = false;
             if (fadeMode > 0)
-                fadeMode--;
+                fadeMode = 0;
 
             lastXSize = -1;
             lastYSize = -1;
@@ -543,7 +540,7 @@ void ProcessStage(void)
         case STAGEMODE_2P_STEP:
             drawStageGFXHQ = false;
             if (fadeMode > 0)
-                fadeMode--;
+                fadeMode = 0;
 
             lastXSize = -1;
             lastYSize = -1;
@@ -557,8 +554,7 @@ void ProcessStage(void)
                         frameCounter = 0;
                         if (++stageSeconds > 59) {
                             stageSeconds = 0;
-                            if (++stageMinutes > 59)
-                                stageMinutes = 0;
+                            ++stageMinutes;
                         }
                     }
                     stageMilliseconds = 100 * frameCounter / 60;
