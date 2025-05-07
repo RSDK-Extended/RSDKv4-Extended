@@ -44,6 +44,25 @@ struct DrawVertex {
     byte a;
 };
 
+struct DrawVertexClassic {
+    short x;
+    short y;
+    short u;
+    short v;
+
+    Color colour;
+};
+
+struct DrawVertexClassic3D {
+    float x;
+    float y;
+    float z;
+    short u;
+    short v;
+
+    Color colour;
+};
+
 struct MatrixF {
     float values[4][4];
 };

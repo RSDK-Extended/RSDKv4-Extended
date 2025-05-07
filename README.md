@@ -2,15 +2,16 @@
 
 An expanded version for the decompilation of Retro Engine v4 and the menus from Sonic 1 and 2 (2013).
 
-This project is a fork meant to be an expanded version of RSDKv4 that allows for the ease of development of ports and mods, it also adds in both new and returning select features into RSDKv4 such as support for playing videos (TBA), the Classic Fade function from Team Forever's edit of RSDKv4 and more on the way!
+This project is a fork meant to be an expanded version of RSDKv4 that allows for the ease of development of ports and mods, it also adds in both new and returning select features into RSDKv4 such as support for playing videos natively (in both OGV *and* RSV), the Classic Fade function from Team Forever's edit of RSDKv4 and more on the way!
 
 # **LIST OF CHANGES OVER THE ORIGINAL RETRO ENGINE VERSION 4**
  * Adds in Team Forever's Classic Fade functions and changes.
  * New temp values - temp8, temp9, temp10
  * New array values - arrayPos8, arrayPos9, arrayPos10
+ * Video player and its functions (currently untested)
 
 # To-Dos:
- * Video player and its functions (unknown)
+ * None (for now.)
 
 # **SUPPORT THE OFFICIAL RELEASE OF SONIC 1 & 2**
 + Without assets from the official releases, this decompilation will not run.
@@ -71,9 +72,9 @@ If you've already cloned the repo, run this command inside of the repository:
 To handle dependencies, you'll need to install [Visual Studio Community](https://visualstudio.microsoft.com/downloads/) (make sure to install the `Desktop development with C++` package during the installation) and [vcpkg](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started?pivots=shell-cmd#1---set-up-vcpkg) (You only need to follow `1 - Set up vcpkg`).
 
 After installing those, run the following in Command Prompt (make sure to replace `[vcpkg root]` with the path to the vcpkg installation!):
-- `[vcpkg root]\vcpkg.exe install glew sdl2 libogg libvorbis --triplet=x64-windows-static` (If you're compiling a 32-bit build, replace `x64-windows-static` with `x86-windows-static`.)
+- `[vcpkg root]\vcpkg.exe install glew sdl2 libogg libtheora libvorbis --triplet=x64-windows-static` (If you're compiling a 32-bit build, replace `x64-windows-static` with `x86-windows-static`.)
 
-Finally, follow the [compilation steps below](#compiling) using `-DCMAKE_TOOLCHAIN_FILE=[vcpkg root]/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_PREFIX_PATH=[vcpkg root]/installed/x64-windows-static/` as arguments for `cmake -B build`.
+Finally, follow the [compilation steps below](#compiling) using `-DCMAKE_TOOLCHAIN_FILE=[vcpkg root]\scripts\buildsystems\vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_PREFIX_PATH=[vcpkg root]\installed\x64-windows-static\` as arguments for `cmake -B build`.
   - Make sure to replace each instance of `[vcpkg root]` with the path to the vcpkg installation!
   - If you're compiling a 32-bit build, replace each instance of `x64-windows-static` with `x86-windows-static`.
 

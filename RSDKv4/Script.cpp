@@ -484,6 +484,10 @@ const FunctionInfo functions[] = {
     FunctionInfo("ObjectTileCollision", 4),
     FunctionInfo("ObjectTileGrip", 4),
 
+    // Video
+    FunctionInfo("LoadVideo", 1),
+    FunctionInfo("NextVideoFrame", 0),
+
     // Bitwise Not
     FunctionInfo("Not", 1),
 
@@ -1008,6 +1012,8 @@ enum ScrFunc {
     FUNC_SETSFXATTRIBUTES,
     FUNC_OBJECTTILECOLLISION,
     FUNC_OBJECTTILEGRIP,
+    FUNC_LOADVIDEO,
+    FUNC_NEXTVIDEOFRAME,
     FUNC_NOT,
     FUNC_DRAW3DSCENE,
     FUNC_SETIDENTITYMATRIX,
@@ -5133,6 +5139,22 @@ void ProcessScript(int scriptCodeStart, int jumpTableStart, byte scriptEvent)
                     case CSIDE_RENTITY: ObjectREntityGrip(scriptEng.operands[1], scriptEng.operands[2], scriptEng.operands[3]); break;
 #endif
                 }
+                break;
+            case FUNC_LOADVIDEO:
+                opcodeSize = 0;
+                PauseSound();
+
+                if (FindStringToken(scriptText, ".rsv", 1) <= -1) {
+                    PlayVideoFile(scriptText);
+                } else {
+                    scriptInfo->spriteSheetID = AddGraphicsFile(scriptText);
+                }
+
+                ResumeSound();
+                break;
+            case FUNC_NEXTVIDEOFRAME:
+                opcodeSize = 0;
+                UpdateVideoFrame();
                 break;
             case FUNC_NOT: scriptEng.operands[0] = ~scriptEng.operands[0]; break;
             case FUNC_DRAW3DSCENE:

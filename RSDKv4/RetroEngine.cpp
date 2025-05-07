@@ -433,7 +433,6 @@ void RetroEngine::Init()
 #endif
         gameType = GAME_SONICCD;
     }
-#endif
 #if RETRO_USE_MOD_LOADER
     if (strstr(gameWindowText, "Sonic 2") || forceSonic2) {
 #else
@@ -441,7 +440,6 @@ void RetroEngine::Init()
 #endif
         gameType = GAME_SONIC2;
     }
-#endif
 #if RETRO_USE_MOD_LOADER
     if (strstr(gameWindowText, "Sonic 3") || forceSonic3) {
 #else
@@ -449,7 +447,6 @@ void RetroEngine::Init()
 #endif
         gameType = GAME_SONIC3;
     }
-#endif
 #if RETRO_USE_MOD_LOADER
     if (strstr(gameWindowText, "Sonic & Knuckles") || forceSonicK) {
 #else
@@ -457,7 +454,6 @@ void RetroEngine::Init()
 #endif
         gameType = GAME_SONICK;
     }
-#endif
 #if RETRO_USE_MOD_LOADER
     if (strstr(gameWindowText, "Sonic 3 & Knuckles") || forceSonic3K) {
 #else
@@ -640,6 +636,7 @@ void RetroEngine::Run()
     }
 
     ReleaseAudioDevice();
+    StopVideoPlayback();
     ReleaseRenderDevice();
 #if !RETRO_USE_ORIGINAL_CODE
     ReleaseInputDevices();
