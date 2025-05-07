@@ -81,6 +81,9 @@ const char variableNames[][0x20] = {
     "arrayPos5",
     "arrayPos6",
     "arrayPos7",
+    "arrayPos8",
+    "arrayPos9",
+    "arrayPos10",
     "global",
     "local",
 
@@ -649,6 +652,9 @@ enum ScrVar {
     VAR_ARRAYPOS5,
     VAR_ARRAYPOS6,
     VAR_ARRAYPOS7,
+    VAR_ARRAYPOS8,
+    VAR_ARRAYPOS9,
+    VAR_ARRAYPOS10,
     VAR_GLOBAL,
     VAR_LOCAL,
     VAR_OBJECTENTITYPOS,
@@ -2028,8 +2034,14 @@ void ConvertFunctionText(char *text)
                             constant = 6;
                         if (StrComp(arrayStr, "arrayPos7"))
                             constant = 7;
-                        if (StrComp(arrayStr, "tempObjectPos"))
+                        if (StrComp(arrayStr, "arrayPos8"))
                             constant = 8;
+                        if (StrComp(arrayStr, "arrayPos9"))
+                            constant = 9;
+                        if (StrComp(arrayStr, "arrayPos10"))
+                            constant = 10;
+                        if (StrComp(arrayStr, "tempObjectPos"))
+                            constant = 11;
 
                         scriptCode[scriptCodePos++] = 1;
                         scriptCode[scriptCodePos++] = constant;
@@ -3429,6 +3441,9 @@ void ProcessScript(int scriptCodeStart, int jumpTableStart, byte scriptEvent)
                     case VAR_ARRAYPOS5: scriptEng.operands[i] = scriptEng.arrayPosition[5]; break;
                     case VAR_ARRAYPOS6: scriptEng.operands[i] = scriptEng.arrayPosition[6]; break;
                     case VAR_ARRAYPOS7: scriptEng.operands[i] = scriptEng.arrayPosition[7]; break;
+                    case VAR_ARRAYPOS8: scriptEng.operands[i] = scriptEng.arrayPosition[8]; break;
+                    case VAR_ARRAYPOS9: scriptEng.operands[i] = scriptEng.arrayPosition[9]; break;
+                    case VAR_ARRAYPOS10: scriptEng.operands[i] = scriptEng.arrayPosition[10]; break;
                     case VAR_GLOBAL: scriptEng.operands[i] = globalVariables[arrayVal]; break;
                     case VAR_LOCAL: scriptEng.operands[i] = scriptCode[arrayVal]; break;
                     case VAR_OBJECTENTITYPOS: scriptEng.operands[i] = arrayVal; break;
@@ -5007,9 +5022,9 @@ void ProcessScript(int scriptCodeStart, int jumpTableStart, byte scriptEvent)
                 break;
             case FUNC_CREATETEMPOBJECT: {
                 opcodeSize = 0;
-                if (objectEntityList[scriptEng.arrayPosition[8]].type > OBJ_TYPE_BLANKOBJECT && ++scriptEng.arrayPosition[8] == ENTITY_COUNT)
-                    scriptEng.arrayPosition[8] = TEMPENTITY_START;
-                Entity *temp = &objectEntityList[scriptEng.arrayPosition[8]];
+                if (objectEntityList[scriptEng.arrayPosition[11]].type > OBJ_TYPE_BLANKOBJECT && ++scriptEng.arrayPosition[11] == ENTITY_COUNT)
+                    scriptEng.arrayPosition[11] = TEMPENTITY_START;
+                Entity *temp = &objectEntityList[scriptEng.arrayPosition[11]];
                 memset(temp, 0, sizeof(Entity));
                 temp->type               = scriptEng.operands[0];
                 temp->propertyValue      = scriptEng.operands[1];
@@ -5726,6 +5741,9 @@ void ProcessScript(int scriptCodeStart, int jumpTableStart, byte scriptEvent)
                     case VAR_ARRAYPOS5: scriptEng.arrayPosition[5] = scriptEng.operands[i]; break;
                     case VAR_ARRAYPOS6: scriptEng.arrayPosition[6] = scriptEng.operands[i]; break;
                     case VAR_ARRAYPOS7: scriptEng.arrayPosition[7] = scriptEng.operands[i]; break;
+                    case VAR_ARRAYPOS8: scriptEng.arrayPosition[8] = scriptEng.operands[i]; break;
+                    case VAR_ARRAYPOS9: scriptEng.arrayPosition[9] = scriptEng.operands[i]; break;
+                    case VAR_ARRAYPOS10: scriptEng.arrayPosition[10] = scriptEng.operands[i]; break;
                     case VAR_GLOBAL: globalVariables[arrayVal] = scriptEng.operands[i]; break;
                     case VAR_LOCAL: scriptCode[arrayVal] = scriptEng.operands[i]; break;
                     case VAR_OBJECTENTITYPOS: break;

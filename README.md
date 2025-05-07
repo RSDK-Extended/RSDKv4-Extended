@@ -7,6 +7,7 @@ This project is a fork meant to be an expanded version of RSDKv4 that allows for
 # **LIST OF CHANGES OVER THE ORIGINAL RETRO ENGINE VERSION 4**
  * Adds in Team Forever's Classic Fade functions and changes.
  * New temp values - temp8, temp9, temp10
+ * New array values - arrayPos8, arrayPos9, arrayPos10
 
 # To-Dos:
  * Video player and its functions (unknown)
@@ -78,10 +79,10 @@ Finally, follow the [compilation steps below](#compiling) using `-DCMAKE_TOOLCHA
 
 ### Linux
 Install the following dependencies: then follow the [compilation steps below](#compiling):
-- **pacman (Arch):** `sudo pacman -S base-devel cmake glew sdl2 libogg libvorbis`
-- **apt (Debian/Ubuntu):** `sudo apt install build-essential cmake libglew-dev libglfw3-dev libsdl2-dev libogg-dev libvorbis-dev`
-- **rpm (Fedora):** `sudo dnf install make gcc cmake glew-devel glfw-devel SDL2-devel libogg-devel libvorbis-devel zlib-devel`
-- **apk (Alpine/PostmarketOS)** `sudo apk add build-base cmake glew-dev glfw-dev sdl2-dev libogg-dev libvorbis-dev`
+- **pacman (Arch):** `sudo pacman -S base-devel cmake glew sdl2 libogg libtheora libvorbis`
+- **apt (Debian/Ubuntu):** `sudo apt install build-essential cmake libglew-dev libglfw3-dev libsdl2-dev libogg-dev libtheora-dev libvorbis-dev`
+- **rpm (Fedora):** `sudo dnf install make gcc cmake glew-devel glfw-devel SDL2-devel libogg-devel libtheora-devel libvorbis-devel zlib-devel`
+- **apk (Alpine/PostmarketOS)** `sudo apk add build-base cmake glew-dev glfw-dev sdl2-dev libogg-dev libtheora-dev libvorbis-dev`
 - Your favorite package manager here, [make a pull request](https://github.com/BlueSpeedsterYT/RSDKv4-Extended/fork)
 
 ### Android

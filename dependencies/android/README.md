@@ -9,6 +9,8 @@
 
 * libvorbis: [Download](https://xiph.org/downloads/) and unzip it in `dependencies/android/libvorbis`.
 
+* libtheora: [Download](https://xiph.org/downloads/) and unzip it in `dependencies/android/libtheora`.
+
 * Ensure the symbolic links in `[root]/android/app/jni` are correct:
   * `SDL` -> Root of the Android SDL dependency
   * `src` -> Root of the RSDKv4 repository

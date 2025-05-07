@@ -25,6 +25,18 @@
     <Filter Include="Header Files\dependencies">
       <UniqueIdentifier>{bd58fec9-0e89-46a0-be0d-5263fe57597c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\dependencies\theoraPlay">
+      <UniqueIdentifier>{6da67f60-9197-48f9-a420-6b4e7de8b859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dependencies\tinyxml2">
+      <UniqueIdentifier>{2616009d-eeef-4b05-ba5d-97fd35af64b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dependencies\tinyxml2">
+      <UniqueIdentifier>{b809e16a-8860-4072-bc8e-6e3cb0d632d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dependencies\theoraPlay">
+      <UniqueIdentifier>{4b33e177-3f51-4725-9c0f-5f7edaf42262}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -210,9 +222,6 @@
     <ClInclude Include="ModAPI.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\dependencies\all\tinyxml2\tinyxml2.h">
-      <Filter>Header Files\dependencies</Filter>
-    </ClInclude>
     <ClInclude Include="NativeObjects\MultiplayerScreen.hpp">
       <Filter>Header Files\nativeEntities</Filter>
     </ClInclude>
@@ -221,6 +230,15 @@
     </ClInclude>
     <ClInclude Include="NativeObjects\MultiplayerHandler.hpp">
       <Filter>Header Files\nativeEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependencies\all\theoraplay\theoraplay.h">
+      <Filter>Header Files\dependencies\theoraPlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependencies\all\theoraplay\theoraplay_cvtrgb.h">
+      <Filter>Header Files\dependencies\theoraPlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependencies\all\tinyxml2\tinyxml2.h">
+      <Filter>Header Files\dependencies\tinyxml2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -407,14 +425,17 @@
     <ClCompile Include="ModAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\dependencies\all\tinyxml2\tinyxml2.cpp">
-      <Filter>Source Files\dependencies</Filter>
-    </ClCompile>
     <ClCompile Include="NativeObjects\MultiplayerScreen.cpp">
       <Filter>Source Files\nativeEntities</Filter>
     </ClCompile>
     <ClCompile Include="NativeObjects\MultiplayerHandler.cpp">
       <Filter>Source Files\nativeEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dependencies\all\tinyxml2\tinyxml2.cpp">
+      <Filter>Source Files\dependencies\tinyxml2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dependencies\all\theoraplay\theoraplay.c">
+      <Filter>Source Files\dependencies\theoraPlay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
