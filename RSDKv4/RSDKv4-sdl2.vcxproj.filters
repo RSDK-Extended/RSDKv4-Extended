@@ -240,6 +240,9 @@
     <ClInclude Include="..\dependencies\all\tinyxml2\tinyxml2.h">
       <Filter>Header Files\dependencies\tinyxml2</Filter>
     </ClInclude>
+    <ClInclude Include="Video.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -436,6 +439,9 @@
     </ClCompile>
     <ClCompile Include="..\dependencies\all\theoraplay\theoraplay.c">
       <Filter>Source Files\dependencies\theoraPlay</Filter>
+    </ClCompile>
+    <ClCompile Include="Video.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
