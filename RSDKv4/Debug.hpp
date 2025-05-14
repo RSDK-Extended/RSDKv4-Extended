@@ -26,9 +26,17 @@ inline void PrintLog(const char *msg, ...)
         }
 
         char pathBuffer[0x100];
-#if RETRO_PLATFORM == RETRO_UWP
+#if RETRO_PLATFORM == RETRO_OSX || RETRO_PLATFORM == RETRO_UWP
         if (!usingCWD)
+#if RETRO_PLATFORM == RETRO_OSX
+        {
+            char logBuffer[0x100];
+            getResourcesPath(logBuffer, sizeof(logBuffer));
+            sprintf(pathBuffer, "%s/log.txt", logBuffer);
+        }
+#else
             sprintf(pathBuffer, "%s/log.txt", getResourcesPath());
+#endif
         else
             sprintf(pathBuffer, "log.txt");
 #elif RETRO_PLATFORM == RETRO_ANDROID
@@ -59,11 +67,17 @@ inline void PrintLog(const ushort *msg)
             printf("\n");
 
         char pathBuffer[0x100];
-#if RETRO_PLATFORM == RETRO_UWP
+#if RETRO_PLATFORM == RETRO_OSX || RETRO_PLATFORM == RETRO_UWP
         if (!usingCWD)
+#if RETRO_PLATFORM == RETRO_OSX
+        {
+            char logBuffer[0x100];
+            getResourcesPath(logBuffer, sizeof(logBuffer));
+            sprintf(pathBuffer, "%s/log.txt", logBuffer);
+        }
+#else
             sprintf(pathBuffer, "%s/log.txt", getResourcesPath());
-        else
-            sprintf(pathBuffer, "log.txt");
+#endif
 #elif RETRO_PLATFORM == RETRO_ANDROID
         sprintf(pathBuffer, "%s/log.txt", gamePath);
         __android_log_print(ANDROID_LOG_INFO, "RSDKv4", "%ls", (wchar_t *)msg);

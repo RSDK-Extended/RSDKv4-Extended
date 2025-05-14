@@ -61,7 +61,7 @@ This project uses [CMake](https://cmake.org/), a versatile building system that 
 In order to clone the repository, you need to install Git, which you can get [here](https://git-scm.com/downloads).
 
 Clone the repo **recursively**, using:
-`git clone --recursive https://github.com/BlueSpeedsterYT/RSDKv4-Extended`
+`git clone --recursive https://github.com/RSDK-Extended/RSDKv4-Extended`
 
 If you've already cloned the repo, run this command inside of the repository:
 ```git submodule update --init --recursive```
@@ -84,7 +84,11 @@ Install the following dependencies: then follow the [compilation steps below](#c
 - **apt (Debian/Ubuntu):** `sudo apt install build-essential cmake libglew-dev libglfw3-dev libsdl2-dev libogg-dev libtheora-dev libvorbis-dev`
 - **rpm (Fedora):** `sudo dnf install make gcc cmake glew-devel glfw-devel SDL2-devel libogg-devel libtheora-devel libvorbis-devel zlib-devel`
 - **apk (Alpine/PostmarketOS)** `sudo apk add build-base cmake glew-dev glfw-dev sdl2-dev libogg-dev libtheora-dev libvorbis-dev`
-- Your favorite package manager here, [make a pull request](https://github.com/BlueSpeedsterYT/RSDKv4-Extended/fork)
+- Your favorite package manager here, [make a pull request](https://github.com/RSDK-Extended/RSDKv4-Extended/fork)
+
+### Mac
+The macOS build doesn't currently use CMake.
+Follow the build instructions [here.](./dependencies/mac/README.md)
 
 ### Android
 Follow the android build instructions [here.](./dependencies/android/README.md)

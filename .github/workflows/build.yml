@@ -12,6 +12,7 @@ env:
   WIN64_FLAGS: "-DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_PREFIX_PATH=C:/vcpkg/installed/x64-windows-static/"
   # FIXME: For some reason ubuntu enables _FORTIFY_SOURCE by default, so let's override it to prevent IO bugs
   GENERAL_LINUX_FLAGS: "-DCMAKE_CXX_FLAGS='-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0'"
+  GENERAL_MACOS_FLAGS: "OTHER_CFLAGS='-DRSDK_AUTOBUILD=1 -DRETRO_DEV_EXTRA=\\\"Darwin\\ -\\ AppleClang\\\"'"
 
 jobs:
   v4-windows:
@@ -22,7 +23,7 @@ jobs:
         with:
           submodules: recursive
       - name: Install dependencies
-        run: vcpkg install glew sdl2 libogg libvorbis --triplet=x86-windows-static
+        run: vcpkg install glew sdl2 libogg libtheora libvorbis --triplet=x86-windows-static
       - name: Build RSDKv4
         run: |
           cmake -B build ${{env.GENERAL_FLAGS}} ${{env.GENERAL_WIN_FLAGS}} ${{env.WIN32_FLAGS}}
@@ -44,7 +45,7 @@ jobs:
         with:
           submodules: recursive
       - name: Install dependencies
-        run: vcpkg install glew sdl2 libogg libvorbis --triplet=x64-windows-static
+        run: vcpkg install glew sdl2 libogg libtheora libvorbis --triplet=x64-windows-static
       - name: Build RSDKv4
         run: |
           cmake -B build ${{env.GENERAL_FLAGS}} ${{env.GENERAL_WIN_FLAGS}} ${{env.WIN64_FLAGS}}
@@ -76,9 +77,9 @@ jobs:
           Invoke-WebRequest -Uri "https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-1.3.5.zip" -OutFile "libogg.zip"
           Expand-Archive -Path libogg.zip -DestinationPath ./dependencies/android/app/jni/src/dependencies/android/
           Rename-Item ./dependencies/android/app/jni/src/dependencies/android/libogg-1.3.5 libogg
-          Invoke-WebRequest -Uri "https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-1.3.7.zip" -OutFile "libvorbis.zip"
-          Expand-Archive -Path libvorbis.zip -DestinationPath ./dependencies/android/app/jni/src/dependencies/android/
-          Rename-Item ./dependencies/android/app/jni/src/dependencies/android/libvorbis-1.3.7 libvorbis
+          Invoke-WebRequest -Uri "https://ftp.osuosl.org/pub/xiph/releases/theora/libtheora-1.1.1.zip" -OutFile "libtheora.zip"
+          Expand-Archive -Path libtheora.zip -DestinationPath ./dependencies/android
+          Rename-Item ./dependencies/android/libtheora-1.1.1 libtheora
       - name: Download GLEW
         run: |
           Invoke-WebRequest -Uri "https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0-win32.zip" -OutFile "GLEW.zip"
@@ -91,6 +92,7 @@ jobs:
           Rename-Item ./android/app/jni/SDL2-2.28.3 SDL
       - name: Move & Copy stuff
         run: |
+          Copy-Item -Path ./dependencies/all/theoraplay -Destination ./dependencies/android/app/jni/src/dependencies/android/
           Copy-Item -Path ./dependencies/android/app/jni/src/dependencies/android\* -Destination ./dependencies/
           Copy-Item -Path ./dependencies/android/app/jni/src/dependencies/android/libogg/ -Destination ./dependencies/android/ -recurse
           Copy-Item -Path ./dependencies/android/config_types.h -Destination ./dependencies/android/libogg/include/ogg/
@@ -118,7 +120,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install libglew-dev libglfw3-dev libsdl2-dev libogg-dev libvorbis-dev
+          sudo apt-get install libglew-dev libglfw3-dev libsdl2-dev libogg-dev libtheora-dev libvorbis-dev
       - name: Build RSDKv4
         run: |
           cmake -B build ${{env.GENERAL_FLAGS}} ${{env.GENERAL_LINUX_FLAGS}}
@@ -135,3 +137,43 @@ jobs:
         with:
           name: v4-linux
           path: linux.tar.gz
+  v4-macOS:
+      runs-on: macos-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            submodules: recursive
+        - name: Download libogg, libvorbis, and libtheora for easier includes
+          run: |
+            curl "https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-1.3.5.zip" --output "libogg.zip"
+            unzip libogg.zip -d ./dependencies/mac/
+            mv ./dependencies/mac/libogg-1.3.5 ./dependencies/mac/libogg
+            curl "https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-1.3.7.zip" --output "libvorbis.zip"
+            unzip libvorbis.zip -d ./dependencies/mac/
+            mv ./dependencies/mac/libvorbis-1.3.7 ./dependencies/mac/libvorbis
+            curl "https://ftp.osuosl.org/pub/xiph/releases/theora/libtheora-1.1.1.zip" --output "libtheora.zip"
+            unzip libtheora.zip -d ./dependencies/mac/
+            mv ./dependencies/mac/libtheora-1.1.1 ./dependencies/mac/libtheora
+        - name: Download SDL2
+          run: |
+            curl "https://libsdl.org/release/SDL2-2.30.7.dmg" --output "SDL2.dmg"
+            hdiutil attach SDL2.dmg
+            cp -r /Volumes/SDL2/SDL2.framework ./dependencies/mac
+        - name: Generate Vorbis headers
+          working-directory: ./dependencies/mac/libogg/
+          run: |
+            ./configure
+        - name: Build RSDKv4
+          run: |
+            xcodebuild -project RSDKv4.xcodeproj -scheme RSDKv4 DSTROOT="./build" -configuration Release DEPLOYMENT_LOCATION=YES ${{env.GENERAL_MACOS_FLAGS}}
+        - name: Zip the app ourselves (Important step to retain symlinks)
+          run: |
+            cd ./build/Applications/
+            echo 'From this folder, run `xattr -cr RSDKv4.app` in Terminal to allow MacOS to open it.' > README.txt
+            zip -r RSDKv4.zip .
+        - name: Upload artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: v4-mac
+            path: build/Applications/RSDKv4.zip
